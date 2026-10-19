@@ -3,13 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import {
-  Car,
-  Zap,
-  Battery,
-  Clock,
-  CheckCircle2,
   Search,
-  Sparkles,
   ArrowRight,
 } from 'lucide-react';
 
@@ -54,7 +48,7 @@ const EV_LIST: EVData[] = [
     batteryKwh: 24.0,
     obcKw: 3.3,
     plugType: 'Type 2 AC (IEC 62196)',
-    chargeTime7Kw: '3.3 Hours (limited by 3.3kW OBC)',
+    chargeTime7Kw: '3.3 Hours',
     chargeTime3Kw: '6.5 Hours',
     fullChargeCost: '₹384',
     rangeKm: 315,
@@ -86,8 +80,8 @@ const EV_LIST: EVData[] = [
     model: 'Ioniq 5',
     batteryKwh: 72.6,
     obcKw: 11.0,
-    plugType: 'Type 2 AC (3-Phase compatible)',
-    chargeTime7Kw: '6.5 Hours (11kW: 4.8h)',
+    plugType: 'Type 2 AC (3-Phase)',
+    chargeTime7Kw: '6.5 Hours',
     chargeTime3Kw: '18.0 Hours',
     fullChargeCost: '₹1,161',
     rangeKm: 631,
@@ -105,10 +99,10 @@ const EV_LIST: EVData[] = [
   },
   {
     make: 'Ather',
-    model: '450X Gen 3 / Apex',
+    model: '450X Gen 3',
     batteryKwh: 3.7,
     obcKw: 3.3,
-    plugType: '15A Industrial / Type 2 Converter',
+    plugType: '15A Socket / Type-2 Converter',
     chargeTime7Kw: '2.5 Hours',
     chargeTime3Kw: '3.5 Hours',
     fullChargeCost: '₹59',
@@ -119,7 +113,7 @@ const EV_LIST: EVData[] = [
     model: 'S1 Pro Gen 2',
     batteryKwh: 4.0,
     obcKw: 3.3,
-    plugType: '15A Household / Industrial Plug',
+    plugType: '15A Household Socket',
     chargeTime7Kw: '2.8 Hours',
     chargeTime3Kw: '4.0 Hours',
     fullChargeCost: '₹64',
@@ -142,109 +136,88 @@ export default function VehicleCompatibilityMatrix() {
   });
 
   return (
-    <section className="py-24 bg-slate-900/40 border-b border-white/[0.06] relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-3">
-            <Car className="w-3.5 h-3.5" />
-            <span>Universal Compatibility</span>
+    <section className="py-20 border-b border-slate-800/80 bg-[#090d16]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+              Vehicle Compatibility & Charging Times
+            </h2>
+            <p className="mt-1.5 text-slate-400 text-sm">
+              VoltShare hosts support standard Type-2 and 15A plugs used by all major Indian electric cars and two-wheelers.
+            </p>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight">
-            Will VoltShare Work With Your EV?
-          </h2>
-          <p className="mt-4 text-slate-400 text-base sm:text-lg">
-            VoltShare hosts support 100% of Indian 4-wheel and 2-wheel electric vehicles with standard Type-2 (IEC 62196-2) and 15A plugs. Check your car’s exact charging parameters below.
-          </p>
 
-          {/* Search & Filter Bar */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 max-w-xl mx-auto">
-            <div className="relative w-full">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search your EV model (e.g. Nexon, Ioniq, Ather...)"
-                className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-white/10 rounded-xl text-white text-xs placeholder-slate-400 focus:outline-none focus:border-cyan-500 transition-colors"
-              />
-            </div>
-
-            <div className="flex gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
-              {makes.map((m) => (
-                <button
-                  key={m}
-                  type="button"
-                  onClick={() => setSelectedMake(m)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
-                    selectedMake === m
-                      ? 'bg-cyan-500 text-slate-950'
-                      : 'bg-white/[0.04] text-slate-300 hover:bg-white/[0.08] border border-white/[0.06]'
-                  }`}
-                >
-                  {m}
-                </button>
-              ))}
-            </div>
+          {/* Quick Search */}
+          <div className="relative w-full md:w-64">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500" />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search EV model..."
+              className="w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-white text-xs placeholder-slate-500 focus:outline-none focus:border-slate-700"
+            />
           </div>
         </div>
 
-        {/* Compatibility Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Brand Filter */}
+        <div className="flex gap-1.5 overflow-x-auto pb-4 mb-6 text-xs">
+          {makes.map((m) => (
+            <button
+              key={m}
+              type="button"
+              onClick={() => setSelectedMake(m)}
+              className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
+                selectedMake === m
+                  ? 'bg-slate-800 text-white font-semibold'
+                  : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-800'
+              }`}
+            >
+              {m}
+            </button>
+          ))}
+        </div>
+
+        {/* Compatibility Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filtered.map((ev) => (
             <div
               key={`${ev.make}-${ev.model}`}
-              className="p-6 rounded-2xl bg-slate-950 border border-white/[0.08] hover:border-cyan-500/40 transition-all flex flex-col justify-between"
+              className="p-5 rounded-xl bg-slate-900 border border-slate-800 flex flex-col justify-between"
             >
               <div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider">
-                    {ev.make}
-                  </span>
-                  <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono text-[11px] border border-emerald-500/20">
-                    {ev.batteryKwh} kWh
-                  </span>
+                <div className="flex items-center justify-between text-xs text-slate-400 mb-1">
+                  <span>{ev.make}</span>
+                  <span className="text-slate-300 font-medium">{ev.batteryKwh} kWh Pack</span>
                 </div>
 
-                <h3 className="text-lg font-bold text-white mt-1">{ev.model}</h3>
-                <p className="text-xs text-slate-400 mt-0.5 font-mono">
-                  {ev.plugType}
-                </p>
+                <h3 className="font-semibold text-white text-base">{ev.model}</h3>
+                <p className="text-xs text-slate-400 mt-0.5">{ev.plugType}</p>
 
-                <div className="mt-5 space-y-2.5 text-xs">
-                  <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.04] flex items-center justify-between">
-                    <span className="text-slate-400 flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5 text-emerald-400" />
-                      VoltShare 7.4kW Speed:
-                    </span>
-                    <span className="font-mono font-bold text-white">{ev.chargeTime7Kw}</span>
+                <div className="mt-4 space-y-2 text-xs">
+                  <div className="flex justify-between py-1.5 border-b border-slate-800/60">
+                    <span className="text-slate-400">7.4 kW Home Speed:</span>
+                    <span className="font-semibold text-white">{ev.chargeTime7Kw}</span>
                   </div>
-
-                  <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.04] flex items-center justify-between">
-                    <span className="text-slate-400 flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5 text-slate-500" />
-                      15A / 3.3kW Socket Speed:
-                    </span>
-                    <span className="font-mono text-slate-300">{ev.chargeTime3Kw}</span>
+                  <div className="flex justify-between py-1.5 border-b border-slate-800/60">
+                    <span className="text-slate-400">15A Socket Speed:</span>
+                    <span className="text-slate-300">{ev.chargeTime3Kw}</span>
                   </div>
-
-                  <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.04] flex items-center justify-between">
-                    <span className="text-slate-400 flex items-center gap-1.5">
-                      <Zap className="w-3.5 h-3.5 text-amber-400" />
-                      Full Charge Cost (@ ₹16/kWh):
-                    </span>
-                    <span className="font-mono font-bold text-emerald-400">{ev.fullChargeCost}</span>
+                  <div className="flex justify-between py-1.5">
+                    <span className="text-slate-400">Full Charge Cost:</span>
+                    <span className="font-semibold text-emerald-400">{ev.fullChargeCost}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-5 pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs">
-                <span className="text-slate-400">Claimed Range: ~{ev.rangeKm} km</span>
+              <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                <span>Range: ~{ev.rangeKm} km</span>
                 <Link
                   href="/chargers"
-                  className="text-cyan-400 hover:text-cyan-300 font-semibold flex items-center gap-1"
+                  className="text-emerald-400 hover:text-emerald-300 font-medium flex items-center gap-1"
                 >
-                  <span>Find Slots</span>
+                  <span>Find Bays</span>
                   <ArrowRight className="w-3 h-3" />
                 </Link>
               </div>

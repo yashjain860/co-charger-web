@@ -1,49 +1,36 @@
 'use client';
 
 import React from 'react';
-import {
-  Star,
-  Quote,
-  CheckCircle2,
-  MapPin,
-  TrendingUp,
-  Zap,
-} from 'lucide-react';
+import { Star, MapPin } from 'lucide-react';
 
 const REVIEWS = [
   {
     name: 'Arjun Verma',
-    role: 'Driveway Host (Bungalow Owner)',
+    role: 'Homeowner & Host',
     location: 'E-7 Arera Colony, Bhopal',
-    setup: '7.4 kW ABB Terra AC Wallbox',
     stat: '₹16,400 earned last month',
-    statSub: '64 hours shared with neighbors',
     quote:
-      'My 7.4kW charger was sitting idle 20 hours a day while I was at the office. VoltShare turned that empty space into pure passive cash. The automatic gate OTP and instant bank payouts mean I don’t even have to talk to anyone.',
+      'My 7.4kW charger was sitting idle during the day while I was at work. Listing on VoltShare was straightforward—the gate code feature means I don’t even have to be home when neighbors charge.',
     rating: 5,
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
   },
   {
     name: 'Vikramaditya Roy',
-    role: 'EV Driver (Tata Nexon EV Max)',
+    role: 'Nexon EV Owner',
     location: 'MP Nagar, Bhopal',
-    setup: 'Daily Commuter (40.5 kWh Pack)',
-    stat: '₹3,800 saved every month',
-    statSub: 'vs commercial DC fast charging',
+    stat: 'Saves ~₹3,500/month',
     quote:
-      'Commercial fast chargers in Bhopal charge ₹24 to ₹28 per unit, and you often get stuck behind a taxi or dealing with broken RFID cards. On VoltShare, I plug in overnight at Arjun’s driveway for ₹16/kWh and wake up to 100% full battery.',
+      'Commercial fast chargers in Bhopal charge ₹24 to ₹28 per unit, and you often get stuck behind fleet cars. Now I plug in overnight at Arjun’s driveway for ₹16/kWh and wake up to 100% full battery.',
     rating: 5,
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80',
   },
   {
     name: 'Dr. Radhika Sharma',
-    role: 'Driveway Host (Covered Garage)',
+    role: 'Driveway Host',
     location: 'Shahpura Lakeview, Bhopal',
-    setup: '7.4 kW Schneider EVlink',
-    stat: '100% Zero Neighbor Friction',
-    statSub: 'Automated 15ms safety trip',
+    stat: 'Zero issues over 4 months',
     quote:
-      'My primary concern was security and whether a stranger could damage my home electrical meter. The Aadhaar KYC requirement and ₹5 Lakh insurance gave me complete confidence. It’s the easiest secondary income stream I have.',
+      'I was initially worried about electrical safety and strangers on the property. The Aadhaar verification and ₹5 Lakh insurance gave me the reassurance I needed. Weekly payouts go straight to my bank account.',
     rating: 5,
     avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80',
   },
@@ -51,64 +38,49 @@ const REVIEWS = [
 
 export default function VerifiedCaseStudies() {
   return (
-    <section className="py-24 bg-slate-900/30 border-b border-white/[0.06] relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-3">
-            <Quote className="w-3.5 h-3.5" />
-            <span>Community Verified</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight">
-            Loved By Neighborhood Hosts & Daily EV Drivers
+    <section className="py-20 border-b border-slate-800/80 bg-[#090d16]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-10">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+            What Hosts & Drivers Say
           </h2>
-          <p className="mt-4 text-slate-400 text-base sm:text-lg">
-            Real feedback from early hosts and EV owners operating on the VoltShare Bhopal community mesh.
+          <p className="mt-1.5 text-slate-400 text-sm">
+            Real feedback from early members using VoltShare in Bhopal.
           </p>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {REVIEWS.map((r) => (
             <div
               key={r.name}
-              className="p-8 rounded-3xl bg-slate-950 border border-white/[0.08] hover:border-emerald-500/30 transition-all flex flex-col justify-between shadow-xl"
+              className="p-6 rounded-xl bg-slate-900 border border-slate-800 flex flex-col justify-between"
             >
               <div>
-                {/* Rating stars */}
-                <div className="flex items-center gap-1 mb-4">
+                <div className="flex items-center gap-1 mb-3">
                   {[...Array(r.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                    <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                   ))}
                 </div>
 
-                {/* Metric pill */}
-                <div className="mb-5 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                  <div className="text-sm font-bold text-emerald-400 font-mono">{r.stat}</div>
-                  <div className="text-[11px] text-slate-400">{r.statSub}</div>
+                <div className="text-xs font-semibold text-emerald-400 mb-3">
+                  {r.stat}
                 </div>
 
-                {/* Quote */}
-                <p className="text-sm text-slate-300 leading-relaxed italic">
+                <p className="text-xs text-slate-300 leading-relaxed">
                   "{r.quote}"
                 </p>
               </div>
 
-              {/* Author bio */}
-              <div className="mt-8 pt-6 border-t border-white/[0.06] flex items-center gap-3.5">
+              <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center gap-3">
                 <img
                   src={r.avatar}
                   alt={r.name}
-                  className="w-11 h-11 rounded-full object-cover border border-emerald-500/30"
+                  className="w-9 h-9 rounded-full object-cover"
                 />
                 <div>
-                  <div className="text-sm font-bold text-white flex items-center gap-1.5">
-                    <span>{r.name}</span>
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                  </div>
-                  <div className="text-xs text-slate-400">{r.role}</div>
-                  <div className="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
-                    <MapPin className="w-3 h-3" />
+                  <div className="text-xs font-bold text-white">{r.name}</div>
+                  <div className="text-[11px] text-slate-400 flex items-center gap-1">
+                    <MapPin className="w-2.5 h-2.5" />
                     <span>{r.location}</span>
                   </div>
                 </div>

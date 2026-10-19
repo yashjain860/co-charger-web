@@ -2,232 +2,140 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import {
-  Car,
-  Home,
-  Search,
-  KeyRound,
-  Zap,
-  CreditCard,
-  ShieldCheck,
-  TrendingUp,
-  Sparkles,
-  ArrowRight,
-  Clock,
-  Lock,
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export default function DualPersonaWorkflow() {
   const [activePersona, setActivePersona] = useState<'driver' | 'host'>('driver');
 
   return (
-    <section className="py-24 bg-slate-950 border-b border-white/[0.06] relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-3">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>How VoltShare Operates</span>
+    <section className="py-20 border-b border-slate-800/80 bg-[#070b13]">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+              How It Works
+            </h2>
+            <p className="mt-1.5 text-slate-400 text-sm">
+              Simple steps for EV owners charging nearby and homeowners hosting their space.
+            </p>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight">
-            Engineered For Drivers. Built For Hosts.
-          </h2>
-          <p className="mt-4 text-slate-400 text-base sm:text-lg">
-            A seamless two-sided marketplace designed to eliminate range anxiety in dense urban neighborhoods while generating hands-free host income.
-          </p>
 
-          {/* Persona Switcher Tabs */}
-          <div className="mt-8 inline-flex p-1.5 rounded-2xl bg-slate-900 border border-white/10">
+          <div className="flex items-center gap-1.5 bg-slate-900 p-1 rounded-xl border border-slate-800">
             <button
               type="button"
               onClick={() => setActivePersona('driver')}
-              className={`px-6 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center gap-2 ${
+              className={`px-4 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                 activePersona === 'driver'
-                  ? 'bg-emerald-500 text-slate-950 shadow-[0_0_15px_rgba(16,185,129,0.3)]'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-slate-800 text-white font-semibold'
+                  : 'text-slate-400 hover:text-slate-200'
               }`}
             >
-              <Car className="w-4 h-4" />
-              <span>For EV Drivers</span>
+              For EV Drivers
             </button>
-
             <button
               type="button"
               onClick={() => setActivePersona('host')}
-              className={`px-6 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center gap-2 ${
+              className={`px-4 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                 activePersona === 'host'
-                  ? 'bg-emerald-500 text-slate-950 shadow-[0_0_15px_rgba(16,185,129,0.3)]'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-slate-800 text-white font-semibold'
+                  : 'text-slate-400 hover:text-slate-200'
               }`}
             >
-              <Home className="w-4 h-4" />
-              <span>For Residential & Society Hosts</span>
+              For Hosts
             </button>
           </div>
         </div>
 
-        {/* Dynamic Workflow Content */}
+        {/* Workflow steps */}
         {activePersona === 'driver' ? (
           <div>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              {/* Step 1 */}
-              <div className="p-6 rounded-2xl bg-slate-900/60 border border-white/[0.08] flex flex-col justify-between hover:border-emerald-500/30 transition-all">
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 font-mono font-bold text-lg mb-4">
-                    01
-                  </div>
-                  <h3 className="text-lg font-bold text-white">Find Nearby Driveways</h3>
-                  <p className="mt-2 text-xs text-slate-400 leading-relaxed">
-                    Filter by exact vehicle connector (Type-2, 15A), power speed (7.4kW - 22kW), and real-time live availability in your neighborhood.
-                  </p>
-                </div>
-                <div className="mt-6 pt-4 border-t border-white/[0.06] flex items-center gap-2 text-xs text-emerald-400 font-medium">
-                  <Search className="w-4 h-4" />
-                  <span>Sub-kilometer GPS accuracy</span>
-                </div>
+              <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
+                <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider block mb-2">Step 1</span>
+                <h3 className="font-semibold text-white text-base mb-1.5">Find a Nearby Bay</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Search by neighborhood and filter by plug type (Type-2 AC or 15A) and charging speed.
+                </p>
               </div>
 
-              {/* Step 2 */}
-              <div className="p-6 rounded-2xl bg-slate-900/60 border border-white/[0.08] flex flex-col justify-between hover:border-emerald-500/30 transition-all">
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 font-mono font-bold text-lg mb-4">
-                    02
-                  </div>
-                  <h3 className="text-lg font-bold text-white">Reserve Guaranteed Bay</h3>
-                  <p className="mt-2 text-xs text-slate-400 leading-relaxed">
-                    Select your charging window (1h to 4h). Pay securely via UPI/Card into escrow. Your private driveway slot is reserved with zero queueing.
-                  </p>
-                </div>
-                <div className="mt-6 pt-4 border-t border-white/[0.06] flex items-center gap-2 text-xs text-emerald-400 font-medium">
-                  <Clock className="w-4 h-4" />
-                  <span>Instant slot confirmation</span>
-                </div>
+              <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
+                <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider block mb-2">Step 2</span>
+                <h3 className="font-semibold text-white text-base mb-1.5">Reserve Your Slot</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Pick your arrival time and duration. Your parking space is guaranteed with zero queueing.
+                </p>
               </div>
 
-              {/* Step 3 */}
-              <div className="p-6 rounded-2xl bg-slate-900/60 border border-white/[0.08] flex flex-col justify-between hover:border-emerald-500/30 transition-all">
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 font-mono font-bold text-lg mb-4">
-                    03
-                  </div>
-                  <h3 className="text-lg font-bold text-white">Arrive & Unlock Gate</h3>
-                  <p className="mt-2 text-xs text-slate-400 leading-relaxed">
-                    Drive up to host premises, share your 4-digit verified entry passcode at the gate intercom, plug your EV, and initiate charging.
-                  </p>
-                </div>
-                <div className="mt-6 pt-4 border-t border-white/[0.06] flex items-center gap-2 text-xs text-emerald-400 font-medium">
-                  <KeyRound className="w-4 h-4" />
-                  <span>Zero host awkwardness</span>
-                </div>
+              <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
+                <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider block mb-2">Step 3</span>
+                <h3 className="font-semibold text-white text-base mb-1.5">Arrive & Plug In</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Enter your 4-digit gate access PIN at the host's intercom, park in the driveway bay, and plug in.
+                </p>
               </div>
 
-              {/* Step 4 */}
-              <div className="p-6 rounded-2xl bg-slate-900/60 border border-white/[0.08] flex flex-col justify-between hover:border-emerald-500/30 transition-all">
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 font-mono font-bold text-lg mb-4">
-                    04
-                  </div>
-                  <h3 className="text-lg font-bold text-white">Live Telemetry & Receipt</h3>
-                  <p className="mt-2 text-xs text-slate-400 leading-relaxed">
-                    Track live battery %, voltage, and kWh on your phone. When complete, power auto-cuts, escrow releases, and GST receipt is emailed.
-                  </p>
-                </div>
-                <div className="mt-6 pt-4 border-t border-white/[0.06] flex items-center gap-2 text-xs text-emerald-400 font-medium">
-                  <CreditCard className="w-4 h-4" />
-                  <span>Automated digital settlement</span>
-                </div>
+              <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
+                <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider block mb-2">Step 4</span>
+                <h3 className="font-semibold text-white text-base mb-1.5">Track & Auto-Pay</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Watch live battery progress on your phone. When complete, power auto-cuts and your receipt is emailed.
+                </p>
               </div>
             </div>
 
-            <div className="mt-12 text-center">
+            <div className="mt-8">
               <Link
                 href="/chargers"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm transition-all shadow-[0_0_20px_rgba(16,185,129,0.25)]"
+                className="inline-flex items-center gap-2 text-xs font-semibold text-emerald-400 hover:text-emerald-300"
               >
-                <span>Find Your Next Driveway Slot</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>Browse nearby chargers</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>
         ) : (
           <div>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              {/* Step 1 */}
-              <div className="p-6 rounded-2xl bg-slate-900/60 border border-white/[0.08] flex flex-col justify-between hover:border-emerald-500/30 transition-all">
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 font-mono font-bold text-lg mb-4">
-                    01
-                  </div>
-                  <h3 className="text-lg font-bold text-white">List Charger in 3 Min</h3>
-                  <p className="mt-2 text-xs text-slate-400 leading-relaxed">
-                    Enter your address, upload 2 photos of your driveway or parking bay, and connect your existing wallbox or order a VoltShare Smart unit.
-                  </p>
-                </div>
-                <div className="mt-6 pt-4 border-t border-white/[0.06] flex items-center gap-2 text-xs text-cyan-400 font-medium">
-                  <Home className="w-4 h-4" />
-                  <span>Zero listing fees</span>
-                </div>
+              <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
+                <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider block mb-2">Step 1</span>
+                <h3 className="font-semibold text-white text-base mb-1.5">List in 3 Minutes</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Enter your address, upload a photo of your driveway, and specify your charger power.
+                </p>
               </div>
 
-              {/* Step 2 */}
-              <div className="p-6 rounded-2xl bg-slate-900/60 border border-white/[0.08] flex flex-col justify-between hover:border-emerald-500/30 transition-all">
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 font-mono font-bold text-lg mb-4">
-                    02
-                  </div>
-                  <h3 className="text-lg font-bold text-white">Set Rules & Rates</h3>
-                  <p className="mt-2 text-xs text-slate-400 leading-relaxed">
-                    You dictate everything: choose allowed charging hours (e.g. 9am to 6pm while at work), set per-kWh tariff, and block personal days.
-                  </p>
-                </div>
-                <div className="mt-6 pt-4 border-t border-white/[0.06] flex items-center gap-2 text-xs text-cyan-400 font-medium">
-                  <Lock className="w-4 h-4" />
-                  <span>100% host autonomy</span>
-                </div>
+              <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
+                <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider block mb-2">Step 2</span>
+                <h3 className="font-semibold text-white text-base mb-1.5">Set Your Schedule</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Choose which hours and days your driveway is open for booking, and set your price per kWh.
+                </p>
               </div>
 
-              {/* Step 3 */}
-              <div className="p-6 rounded-2xl bg-slate-900/60 border border-white/[0.08] flex flex-col justify-between hover:border-emerald-500/30 transition-all">
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 font-mono font-bold text-lg mb-4">
-                    03
-                  </div>
-                  <h3 className="text-lg font-bold text-white">Hands-Free Security</h3>
-                  <p className="mt-2 text-xs text-slate-400 leading-relaxed">
-                    Drivers are 100% Aadhaar-verified. Only confirmed bookings receive gate entry PINs. Your personal home interior stays completely private.
-                  </p>
-                </div>
-                <div className="mt-6 pt-4 border-t border-white/[0.06] flex items-center gap-2 text-xs text-cyan-400 font-medium">
-                  <ShieldCheck className="w-4 h-4" />
-                  <span>₹5 Lakh property guarantee</span>
-                </div>
+              <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
+                <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider block mb-2">Step 3</span>
+                <h3 className="font-semibold text-white text-base mb-1.5">Automated Gate Entry</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Only verified drivers with confirmed bookings receive gate access codes. Your home stays private.
+                </p>
               </div>
 
-              {/* Step 4 */}
-              <div className="p-6 rounded-2xl bg-slate-900/60 border border-white/[0.08] flex flex-col justify-between hover:border-emerald-500/30 transition-all">
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 font-mono font-bold text-lg mb-4">
-                    04
-                  </div>
-                  <h3 className="text-lg font-bold text-white">Weekly Bank Payouts</h3>
-                  <p className="mt-2 text-xs text-slate-400 leading-relaxed">
-                    Metered energy consumption is calculated automatically. Net earnings are deposited directly to your bank account every Monday via UPI/NEFT.
-                  </p>
-                </div>
-                <div className="mt-6 pt-4 border-t border-white/[0.06] flex items-center gap-2 text-xs text-cyan-400 font-medium">
-                  <TrendingUp className="w-4 h-4" />
-                  <span>Direct automated settlement</span>
-                </div>
+              <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
+                <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider block mb-2">Step 4</span>
+                <h3 className="font-semibold text-white text-base mb-1.5">Weekly Bank Payouts</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Earnings from guest charging are calculated automatically and deposited to your bank every Monday.
+                </p>
               </div>
             </div>
 
-            <div className="mt-12 text-center">
+            <div className="mt-8">
               <Link
                 href="/host"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm transition-all shadow-[0_0_20px_rgba(6,182,212,0.25)]"
+                className="inline-flex items-center gap-2 text-xs font-semibold text-emerald-400 hover:text-emerald-300"
               >
-                <span>List Your Charger as a Host</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>List your charger as a host</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>

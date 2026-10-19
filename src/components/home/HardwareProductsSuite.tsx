@@ -3,16 +3,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import {
-  Cpu,
-  Zap,
-  Shield,
-  Wifi,
-  Smartphone,
   Check,
   ArrowRight,
-  Gauge,
-  Sliders,
-  Sparkles,
 } from 'lucide-react';
 
 interface Product {
@@ -31,97 +23,97 @@ interface Product {
 const products: Product[] = [
   {
     id: 'wallbox-7',
-    tag: 'Flagship Residential',
-    title: 'VoltShare Home Smart Wallbox',
-    subtitle: '7.4 kW Level-2 AC Smart Charger with Dynamic Load Curtailment',
+    tag: 'Residential Driveways',
+    title: 'VoltShare Home Wallbox (7.4 kW)',
+    subtitle: 'Single-phase smart EV charger with dynamic household load balancing',
     price: '₹28,999',
     priceSub: 'or ₹1,299/mo lease',
     image: 'https://images.unsplash.com/photo-1558441719-74e508827361?auto=format&fit=crop&w=800&q=80',
     specs: {
-      'Rated Output': '7.4 kW (230V / 32A 1-Phase)',
-      'Connector': 'Tethered 5m Type-2 (IEC 62196-2)',
+      'Rated Output': '7.4 kW (230V / 32A)',
+      'Connector': 'Tethered 5m Type-2 Cable',
       'Connectivity': 'Built-in 4G LTE eSIM + Wi-Fi',
-      'Protection': 'IP65 Weatherproof & IK10 Vandal-Resistant',
-      'Metering': 'MID-Class 1 Certified Smart Meter',
+      'Enclosure': 'IP65 Weatherproof',
+      'Metering': 'MID-Class 1 Certified Revenue Meter',
       'Warranty': '3 Years Comprehensive Replacement',
     },
     features: [
-      'Automated tenant & guest billing directly to your bank account',
-      'Dynamic load balancing prevents tripping domestic mains',
+      'Automated guest billing deposited weekly to your bank account',
+      'Dynamic load curtailment prevents tripping domestic meters',
       'RFID swipe cards for household members + mobile app for guests',
-      'Solar net-metering integration (surplus solar charging mode)',
+      'Integrates with rooftop solar net-metering',
     ],
     ctaText: 'Order Home Wallbox',
   },
   {
     id: 'pro-duo-22',
-    tag: 'Societies & Commercial',
-    title: 'VoltShare Pro Duo Dual-Gun',
-    subtitle: '22 kW Commercial Destination Station for RWAs & Corporate Bays',
+    tag: 'Societies & Offices',
+    title: 'VoltShare Pro Duo Dual-Bay (22 kW)',
+    subtitle: 'Three-phase dual-gun AC station for housing societies and commercial complexes',
     price: '₹64,999',
     priceSub: 'inclusive of dual MID meters & GST',
     image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80',
     specs: {
       'Rated Output': '22 kW (415V / 32A 3-Phase, 11kW x 2)',
-      'Connector': 'Dual Type-2 Sockets with Electronic Lock',
-      'Connectivity': 'Ethernet + 4G Cat-M1 + OCPP 1.6J JSON',
-      'Protection': 'IP66 Industrial Powder-Coated Steel',
-      'Metering': 'Dual Independent Bi-directional Revenue Meters',
+      'Connector': 'Dual Type-2 Sockets with Motorized Lock',
+      'Connectivity': 'Ethernet + 4G + OCPP 1.6J JSON',
+      'Enclosure': 'IP66 Industrial Steel Casing',
+      'Metering': 'Dual Independent Revenue Sub-Meters',
       'Warranty': '5 Years Commercial On-Site Warranty',
     },
     features: [
-      'Simultaneous charging for 2 vehicles with intelligent load distribution',
-      'Automated RWA society maintenance account credit reconciliation',
-      '7-inch outdoor readable anti-glare capacitive display',
-      'Emergency stop button & 15ms Type-B RCD electrical safety cutoff',
+      'Charges two cars simultaneously with smart power distribution',
+      'Direct credit integration for society maintenance accounts',
+      '7-inch outdoor readable anti-glare display',
+      'Built-in 15ms Type-B RCD electrical safety cutoff',
     ],
     ctaText: 'Request Society Demo',
   },
   {
     id: 'smart-meter-kit',
-    tag: 'Retrofit Existing Charger',
+    tag: 'Retrofit Kit',
     title: 'VoltShare IoT Sub-Meter Hub',
-    subtitle: 'DIN-Rail Retrofit Kit for Existing Tata, ABB or Schneider Wallboxes',
+    subtitle: 'DIN-rail retrofit module for existing Tata, ABB, or Schneider chargers',
     price: '₹4,999',
-    priceSub: 'one-time hardware cost',
+    priceSub: 'one-time module cost',
     image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
     specs: {
-      'Compatibility': 'Works with any 1-Phase or 3-Phase AC Charger',
-      'Current Sensors': 'Split-core non-invasive CT Clamps (up to 63A)',
-      'Connectivity': 'NB-IoT & LoRaWAN with 5-year data package',
-      'Form Factor': 'Standard 2-Module DIN-Rail Mount',
-      'Relay Cutoff': 'Integrated 40A Contactor with remote trip',
+      'Compatibility': 'Any 1-Phase or 3-Phase AC Charger',
+      'Sensors': 'Split-core non-invasive CT clamps',
+      'Connectivity': 'NB-IoT & LoRaWAN with data plan',
+      'Mounting': 'Standard 2-Module DIN-Rail inside breaker box',
+      'Protection': 'Integrated remote disconnect contactor',
       'Warranty': '2 Years Replacement Guarantee',
     },
     features: [
-      'Turn your existing unmetered charger into a paid public node',
-      'Zero wire cutting: installs in 15 minutes inside your electrical panel',
-      'Automatic sync with VoltShare Driver App and instant settlements',
-      'Maintains original OEM manufacturer warranty intact',
+      'Share your existing OEM charger without replacing hardware',
+      'Installs in 15 minutes without cutting existing wiring',
+      'Syncs with the VoltShare app for automated guest payments',
+      'Keeps your OEM manufacturer warranty intact',
     ],
     ctaText: 'Get Retrofit Kit',
   },
   {
     id: 'travel-adapter',
-    tag: 'On-The-Go Heavy Duty',
+    tag: 'Portable',
     title: 'VoltShare Mobile 3.3 kW Adapter',
-    subtitle: 'Portable Rugged 16A Smart Charging Cable with OLED Display',
+    subtitle: 'Heavy-duty 16A portable charging cable for emergency and road trip charging',
     price: '₹11,499',
-    priceSub: 'includes hard shell carry case',
+    priceSub: 'includes heavy-duty carry case',
     image: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=800&q=80',
     specs: {
-      'Rated Output': '3.3 kW (230V / 16A, Adjustable 8A/10A/13A/16A)',
-      'Inlet Plug': '16A Industrial 3-Pin + 15A Household Converter',
+      'Rated Output': '3.3 kW (230V / 16A, Adjustable)',
+      'Inlet Plug': '16A Industrial + 15A Household converter',
       'Vehicle Plug': 'Type-2 (IEC 62196)',
-      'Display': '0.96-inch Real-Time OLED (Volts, Amps, kWh, Temp)',
-      'Protection': 'IP66 Waterproof & Crush-Proof (2-Ton Driveover)',
-      'Cable Length': '8.5 Meters Heavy-Duty TPU Cable',
+      'Display': 'OLED Voltage, Current, and kWh readout',
+      'Enclosure': 'IP66 Waterproof & Crush-Proof',
+      'Cable Length': '8.5 Meters TPU Cable',
     },
     features: [
-      'Emergency roadside charging from any standard 15A/16A wall outlet',
-      'Over-temperature auto-curtailment protects socket from overheating',
-      'Lightning & leakage protection (Class A RCD built into control box)',
-      'Fits compactly in trunk frunk or spare wheel cavity',
+      'Emergency charging from standard 15A/16A electrical sockets',
+      'Socket temperature monitoring prevents overheating',
+      'Built-in surge and earth fault protection',
+      'Compact trunk storage',
     ],
     ctaText: 'Order Travel Kit',
   },
@@ -132,185 +124,139 @@ export default function HardwareProductsSuite() {
   const activeProduct = products.find((p) => p.id === activeTab) || products[0];
 
   return (
-    <section className="py-24 bg-slate-900/40 border-b border-white/[0.06] relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-3">
-            <Cpu className="w-3.5 h-3.5" />
-            <span>The Hardware Ecosystem</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight">
-            Engineered For Residential Driveways & Housing Societies
+    <section className="py-20 border-b border-slate-800/80 bg-[#090d16]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-10">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+            Chargers & Smart Sub-Meters
           </h2>
-          <p className="mt-4 text-slate-400 text-base sm:text-lg">
-            Whether you already own an OEM EV charger or want a plug-and-play smart wallbox, our hardware turns any parking bay into a compliant, automated revenue generator.
+          <p className="mt-1.5 text-slate-400 text-sm max-w-2xl">
+            Whether you need a new wallbox or want to retrofit an existing charger, our hardware turns any parking space into an automated charging bay.
           </p>
         </div>
 
-        {/* Product Selector Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
+        {/* Quiet Selector Pills */}
+        <div className="flex flex-wrap gap-2 mb-8">
           {products.map((p) => (
             <button
               key={p.id}
               type="button"
               onClick={() => setActiveTab(p.id)}
-              className={`px-5 py-3 rounded-xl text-sm font-semibold transition-all flex items-center gap-2.5 ${
+              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-colors ${
                 activeTab === p.id
-                  ? 'bg-emerald-500 text-slate-950 shadow-[0_0_20px_rgba(16,185,129,0.3)]'
-                  : 'bg-white/[0.04] text-slate-300 hover:bg-white/[0.08] border border-white/[0.06]'
+                  ? 'bg-emerald-500 text-slate-950'
+                  : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800'
               }`}
             >
-              <Zap className={`w-4 h-4 ${activeTab === p.id ? 'fill-slate-950' : 'text-emerald-400'}`} />
-              <span>{p.title}</span>
+              {p.title}
             </button>
           ))}
         </div>
 
-        {/* Active Product Deep-Dive Card */}
-        <div className="bg-slate-950 border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl overflow-hidden relative">
+        {/* Selected Product Card */}
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Left: Product Image & Badges */}
-            <div className="lg:col-span-5 relative">
-              <div className="relative h-80 sm:h-96 w-full rounded-2xl overflow-hidden border border-white/10 bg-slate-900">
+            {/* Left Image */}
+            <div className="lg:col-span-5">
+              <div className="relative h-64 sm:h-72 w-full rounded-xl overflow-hidden bg-slate-800">
                 <img
                   src={activeProduct.image}
                   alt={activeProduct.title}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-                <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1 rounded-md bg-emerald-500 text-slate-950 text-xs font-bold uppercase tracking-wider shadow-lg">
-                    {activeProduct.tag}
-                  </span>
-                </div>
+                <span className="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/80 backdrop-blur-sm text-white text-xs font-semibold border border-white/10">
+                  {activeProduct.tag}
+                </span>
               </div>
 
-              {/* Price card below */}
-              <div className="mt-4 p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-between">
+              <div className="mt-4 p-4 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between">
                 <div>
-                  <div className="text-2xl sm:text-3xl font-extrabold text-white font-mono">
+                  <div className="text-2xl font-bold text-white">
                     {activeProduct.price}
                   </div>
                   <div className="text-xs text-slate-400">{activeProduct.priceSub}</div>
                 </div>
                 <Link
                   href="/host"
-                  className="px-5 py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition-colors shadow-md"
+                  className="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-xs transition-colors"
                 >
                   {activeProduct.ctaText}
                 </Link>
               </div>
             </div>
 
-            {/* Right: Technical Specs & Core Features */}
-            <div className="lg:col-span-7 flex flex-col justify-between">
-              <div>
-                <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                  {activeProduct.title}
-                </h3>
-                <p className="mt-1 text-slate-400 text-sm font-medium">
-                  {activeProduct.subtitle}
-                </p>
+            {/* Right Specs */}
+            <div className="lg:col-span-7">
+              <h3 className="text-xl sm:text-2xl font-bold text-white">
+                {activeProduct.title}
+              </h3>
+              <p className="mt-1 text-slate-400 text-xs sm:text-sm">
+                {activeProduct.subtitle}
+              </p>
 
-                {/* Key Benefits */}
-                <div className="mt-6 space-y-2.5">
-                  <h4 className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">
-                    Core Platform Capabilities
-                  </h4>
-                  {activeProduct.features.map((f, idx) => (
-                    <div key={idx} className="flex items-start gap-2.5 text-sm text-slate-300">
-                      <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shrink-0 mt-0.5 text-emerald-400">
-                        <Check className="w-3 h-3" />
-                      </div>
-                      <span>{f}</span>
+              <div className="mt-5 space-y-2 text-xs text-slate-300">
+                {activeProduct.features.map((f, idx) => (
+                  <div key={idx} className="flex items-start gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                    <span>{f}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6 pt-5 border-t border-slate-800">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  {Object.entries(activeProduct.specs).map(([specKey, specVal]) => (
+                    <div key={specKey} className="p-2.5 rounded-lg bg-slate-950 border border-slate-800">
+                      <span className="text-slate-500 block text-[11px]">{specKey}</span>
+                      <span className="text-slate-200 font-medium">{specVal}</span>
                     </div>
                   ))}
                 </div>
-
-                {/* Technical Specifications Matrix */}
-                <div className="mt-8 pt-6 border-t border-white/[0.08]">
-                  <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
-                    Verified Technical Specifications
-                  </h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {Object.entries(activeProduct.specs).map(([specKey, specVal]) => (
-                      <div
-                        key={specKey}
-                        className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] flex flex-col"
-                      >
-                        <span className="text-[11px] font-mono text-slate-400">{specKey}</span>
-                        <span className="text-sm font-medium text-slate-200 mt-0.5">{specVal}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom Guarantee Banner */}
-              <div className="mt-8 p-3.5 rounded-xl bg-emerald-950/30 border border-emerald-500/20 flex items-center gap-3 text-xs text-emerald-300">
-                <Shield className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>
-                  All hardware meets Indian CEA (Central Electricity Authority) 2023 EV charging safety standards.
-                </span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Hardware Comparison Table */}
-        <div className="mt-16 bg-slate-950/80 border border-white/10 rounded-2xl overflow-x-auto">
-          <table className="w-full text-left text-xs sm:text-sm text-slate-300">
-            <thead className="bg-white/[0.04] text-slate-400 font-mono uppercase text-[11px] border-b border-white/10">
+        {/* Clean Spec Table */}
+        <div className="mt-12 bg-slate-900 border border-slate-800 rounded-xl overflow-x-auto">
+          <table className="w-full text-left text-xs text-slate-300">
+            <thead className="bg-slate-950 text-slate-400 uppercase text-[11px] border-b border-slate-800">
               <tr>
-                <th className="py-4 px-6">Hardware Model</th>
-                <th className="py-4 px-6">Max Output</th>
-                <th className="py-4 px-6">Target Deployment</th>
-                <th className="py-4 px-6">Connectivity</th>
-                <th className="py-4 px-6">Billing Mode</th>
-                <th className="py-4 px-6">Price</th>
+                <th className="py-3 px-5">Model</th>
+                <th className="py-3 px-5">Power</th>
+                <th className="py-3 px-5">Target Placement</th>
+                <th className="py-3 px-5">Connectivity</th>
+                <th className="py-3 px-5">Price</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/[0.06]">
+            <tbody className="divide-y divide-slate-800/60">
               <tr>
-                <td className="py-4 px-6 font-bold text-white flex items-center gap-2">
-                  <Zap className="w-3.5 h-3.5 text-emerald-400" /> VoltShare Home 7.4kW
-                </td>
-                <td className="py-4 px-6 font-mono text-emerald-400 font-semibold">7.4 kW (32A 1-Ph)</td>
-                <td className="py-4 px-6">Villas, Bungalows, Paved Driveways</td>
-                <td className="py-4 px-6">4G LTE + Wi-Fi</td>
-                <td className="py-4 px-6">VoltShare App Direct Escrow</td>
-                <td className="py-4 px-6 font-mono font-bold text-white">₹28,999</td>
+                <td className="py-3.5 px-5 font-semibold text-white">VoltShare Home 7.4kW</td>
+                <td className="py-3.5 px-5 text-emerald-400">7.4 kW (32A 1-Ph)</td>
+                <td className="py-3.5 px-5">Bungalows, Villas, Paved Driveways</td>
+                <td className="py-3.5 px-5">4G LTE + Wi-Fi</td>
+                <td className="py-3.5 px-5 font-bold text-white">₹28,999</td>
               </tr>
               <tr>
-                <td className="py-4 px-6 font-bold text-white flex items-center gap-2">
-                  <Zap className="w-3.5 h-3.5 text-cyan-400" /> VoltShare Pro Duo 22kW
-                </td>
-                <td className="py-4 px-6 font-mono text-cyan-400 font-semibold">22 kW (32A 3-Ph, Dual)</td>
-                <td className="py-4 px-6">Societies, Commercial Parks</td>
-                <td className="py-4 px-6">Ethernet + 4G + OCPP 1.6J</td>
-                <td className="py-4 px-6">Dual Sub-Meter RWA Auto-Payout</td>
-                <td className="py-4 px-6 font-mono font-bold text-white">₹64,999</td>
+                <td className="py-3.5 px-5 font-semibold text-white">VoltShare Pro Duo 22kW</td>
+                <td className="py-3.5 px-5 text-cyan-400">22 kW (32A 3-Ph, Dual)</td>
+                <td className="py-3.5 px-5">Societies, Offices, Fleet Bays</td>
+                <td className="py-3.5 px-5">Ethernet + 4G + OCPP 1.6J</td>
+                <td className="py-3.5 px-5 font-bold text-white">₹64,999</td>
               </tr>
               <tr>
-                <td className="py-4 px-6 font-bold text-white flex items-center gap-2">
-                  <Zap className="w-3.5 h-3.5 text-amber-400" /> IoT Sub-Meter Retrofit
-                </td>
-                <td className="py-4 px-6 font-mono text-amber-400 font-semibold">Up to 44 kW Passthrough</td>
-                <td className="py-4 px-6">Existing Wallbox Owners</td>
-                <td className="py-4 px-6">NB-IoT / LoRaWAN</td>
-                <td className="py-4 px-6">App Automated Revenue Split</td>
-                <td className="py-4 px-6 font-mono font-bold text-white">₹4,999</td>
+                <td className="py-3.5 px-5 font-semibold text-white">IoT Sub-Meter Retrofit</td>
+                <td className="py-3.5 px-5 text-slate-300">Up to 44 kW Passthrough</td>
+                <td className="py-3.5 px-5">Existing Wallbox Owners</td>
+                <td className="py-3.5 px-5">NB-IoT / LoRaWAN</td>
+                <td className="py-3.5 px-5 font-bold text-white">₹4,999</td>
               </tr>
               <tr>
-                <td className="py-4 px-6 font-bold text-white flex items-center gap-2">
-                  <Zap className="w-3.5 h-3.5 text-teal-400" /> Mobile 3.3kW Travel Kit
-                </td>
-                <td className="py-4 px-6 font-mono text-teal-400 font-semibold">3.3 kW (16A 1-Ph)</td>
-                <td className="py-4 px-6">Emergency Roadside & Roadtrips</td>
-                <td className="py-4 px-6">OLED Display Onboard</td>
-                <td className="py-4 px-6">Flat Domestic Outlet Plug</td>
-                <td className="py-4 px-6 font-mono font-bold text-white">₹11,499</td>
+                <td className="py-3.5 px-5 font-semibold text-white">Mobile 3.3kW Travel Kit</td>
+                <td className="py-3.5 px-5 text-slate-300">3.3 kW (16A 1-Ph)</td>
+                <td className="py-3.5 px-5">Trunk Emergency Cable</td>
+                <td className="py-3.5 px-5">OLED Display Onboard</td>
+                <td className="py-3.5 px-5 font-bold text-white">₹11,499</td>
               </tr>
             </tbody>
           </table>

@@ -62,8 +62,8 @@ export default function ChargerDetailPage({
   if (loading) {
     return (
       <div className="max-w-5xl mx-auto px-4 py-16 text-center">
-        <div className="w-12 h-12 rounded-full border-2 border-emerald-500 border-t-transparent animate-spin mx-auto mb-4" />
-        <p className="text-slate-400 text-sm">Accessing VoltShare Mesh Node...</p>
+        <div className="w-8 h-8 rounded-full border-2 border-emerald-500 border-t-transparent animate-spin mx-auto mb-3" />
+        <p className="text-slate-400 text-xs">Loading charger details...</p>
       </div>
     );
   }
@@ -71,11 +71,11 @@ export default function ChargerDetailPage({
   if (!charger) {
     return (
       <div className="max-w-md mx-auto px-4 py-20 text-center">
-        <h2 className="text-2xl font-bold text-white mb-2">Charger Node Not Found</h2>
+        <h2 className="text-xl font-bold text-white mb-2">Charger Not Found</h2>
         <p className="text-slate-400 text-xs mb-6">This charger listing may have been deactivated or removed.</p>
         <Link
           href="/chargers"
-          className="px-5 py-2.5 rounded-xl bg-emerald-500 text-white font-bold text-xs"
+          className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-xs transition"
         >
           Back to Directory
         </Link>
@@ -136,17 +136,17 @@ export default function ChargerDetailPage({
         {/* Left 2 Cols: Details & Photos */}
         <div className="lg:col-span-2 space-y-6">
           {/* Main Photo Card */}
-          <div className="relative h-80 sm:h-96 rounded-3xl overflow-hidden bg-slate-950 border border-slate-800 shadow-2xl">
+          <div className="relative h-80 sm:h-96 rounded-2xl overflow-hidden bg-slate-950 border border-white/[0.08] shadow-md">
             <img
               src={charger.photos?.[0] || 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1200&q=80'}
               alt={charger.title}
               className="w-full h-full object-cover"
             />
-            <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/10 text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+            <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/10 text-xs font-medium text-slate-200 flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
               <span>Verified Residential Driveway</span>
             </div>
-            <div className="absolute top-4 right-4 px-3.5 py-1.5 rounded-full bg-emerald-500 text-white font-extrabold text-xs shadow-lg">
+            <div className="absolute top-4 right-4 px-3.5 py-1.5 rounded-full bg-emerald-500 text-slate-950 font-bold text-xs shadow-sm">
               {charger.powerKw} kW AC Fast
             </div>
           </div>
@@ -154,20 +154,20 @@ export default function ChargerDetailPage({
           {/* Heading Info */}
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20">
+              <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold border border-emerald-500/20">
                 {charger.connectorType}
               </span>
               <span className="px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 text-xs font-medium">
                 {charger.parkingType}
               </span>
-              <div className="flex items-center gap-1 text-amber-400 text-xs font-bold ml-auto">
+              <div className="flex items-center gap-1 text-amber-400 text-xs font-semibold ml-auto">
                 <Star className="w-4 h-4 fill-amber-400" />
                 <span>{charger.rating}</span>
                 <span className="text-slate-500 font-normal">({charger.reviewCount} reviews)</span>
               </div>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white mb-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2 tracking-tight">
               {charger.title}
             </h1>
             <p className="text-sm text-slate-400 flex items-center gap-1.5">
@@ -177,31 +177,31 @@ export default function ChargerDetailPage({
           </div>
 
           {/* Description & Specs */}
-          <div className="p-6 rounded-2xl glass-panel border border-slate-800 space-y-4">
-            <h3 className="font-bold text-white text-base">About This Charger</h3>
+          <div className="p-6 rounded-2xl bg-[#0c121e] border border-white/[0.08] space-y-4">
+            <h3 className="font-semibold text-white text-base">About This Charger</h3>
             <p className="text-sm text-slate-300 leading-relaxed">
               {charger.description}
             </p>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-4 border-t border-slate-800/80">
-              <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-                <span className="text-[11px] text-slate-500 block mb-0.5">Connector</span>
-                <span className="font-bold text-sm text-white">{charger.connectorType}</span>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-4 border-t border-white/[0.06]">
+              <div className="p-3 rounded-xl bg-[#070b13] border border-white/[0.05]">
+                <span className="text-[11px] text-slate-400 block mb-0.5">Connector</span>
+                <span className="font-semibold text-sm text-white">{charger.connectorType}</span>
               </div>
-              <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-                <span className="text-[11px] text-slate-500 block mb-0.5">Max Output</span>
-                <span className="font-bold text-sm text-emerald-400">{charger.powerKw} kW</span>
+              <div className="p-3 rounded-xl bg-[#070b13] border border-white/[0.05]">
+                <span className="text-[11px] text-slate-400 block mb-0.5">Max Output</span>
+                <span className="font-semibold text-sm text-emerald-400">{charger.powerKw} kW</span>
               </div>
-              <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 col-span-2 sm:col-span-1">
-                <span className="text-[11px] text-slate-500 block mb-0.5">Tariff</span>
-                <span className="font-bold text-sm text-white">₹{charger.pricingPerKwh} / kWh</span>
+              <div className="p-3 rounded-xl bg-[#070b13] border border-white/[0.05] col-span-2 sm:col-span-1">
+                <span className="text-[11px] text-slate-400 block mb-0.5">Tariff</span>
+                <span className="font-semibold text-sm text-white">₹{charger.pricingPerKwh} / kWh</span>
               </div>
             </div>
           </div>
 
           {/* Parking & Access Notes */}
-          <div className="p-6 rounded-2xl glass-panel border border-slate-800">
-            <h3 className="font-bold text-white text-base mb-2 flex items-center gap-2">
+          <div className="p-6 rounded-2xl bg-[#0c121e] border border-white/[0.08]">
+            <h3 className="font-semibold text-white text-base mb-2 flex items-center gap-2">
               <Info className="w-4 h-4 text-emerald-400" />
               <span>Access & Entry Instructions</span>
             </h3>
@@ -215,41 +215,39 @@ export default function ChargerDetailPage({
           </div>
 
           {/* Host Card */}
-          <div className="p-5 rounded-2xl glass-panel border border-slate-800 flex items-center justify-between">
+          <div className="p-5 rounded-2xl bg-[#0c121e] border border-white/[0.08] flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-400 p-0.5">
-                <div className="w-full h-full bg-[#090d16] rounded-[14px] flex items-center justify-center font-bold text-emerald-300 text-lg">
-                  {charger.hostName.charAt(0)}
-                </div>
+              <div className="w-11 h-11 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-slate-200 text-base">
+                {charger.hostName.charAt(0)}
               </div>
               <div>
-                <h4 className="font-bold text-white text-sm">{charger.hostName}</h4>
+                <h4 className="font-semibold text-white text-sm">{charger.hostName}</h4>
                 <p className="text-xs text-slate-400">Verified VoltShare Host • Bhopal Central</p>
               </div>
             </div>
-            <div className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[11px] font-bold text-emerald-400">
-              Superhost ⚡
+            <div className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-semibold text-emerald-400">
+              Verified Host
             </div>
           </div>
         </div>
 
         {/* Right Col: Interactive Reservation Studio */}
         <div className="lg:col-span-1">
-          <div className="sticky top-24 p-6 rounded-3xl glass-panel-glow border border-emerald-500/40 bg-[#090d16]">
-            <div className="flex items-baseline justify-between mb-6 pb-4 border-b border-slate-800">
+          <div className="sticky top-24 p-6 rounded-2xl bg-[#0c121e] border border-white/[0.08] shadow-sm">
+            <div className="flex items-baseline justify-between mb-6 pb-4 border-b border-white/[0.06]">
               <div>
-                <span className="text-2xl font-black text-white font-mono">₹{charger.pricingPerKwh}</span>
+                <span className="text-2xl font-bold text-white">₹{charger.pricingPerKwh}</span>
                 <span className="text-xs text-slate-400 font-normal"> / kWh</span>
               </div>
               <div className="text-right">
-                <span className="text-xs font-semibold text-emerald-400 block">Instant Booking</span>
-                <span className="text-[10px] text-slate-500">Zero cancellation fee</span>
+                <span className="text-xs font-semibold text-emerald-400 block">Instant Reservation</span>
+                <span className="text-[10px] text-slate-500">Free cancellation up to 1hr</span>
               </div>
             </div>
 
             {/* Error Message */}
             {bookingError && (
-              <div className="mb-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs">
+              <div className="mb-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs">
                 {bookingError}
               </div>
             )}
@@ -265,7 +263,7 @@ export default function ChargerDetailPage({
                   type="datetime-local"
                   value={startTime}
                   onChange={(e) => setStartTime(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs font-mono focus:border-emerald-500 focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#070b13] border border-white/[0.08] text-white text-xs focus:border-emerald-500 focus:outline-none"
                 />
               </div>
 
@@ -275,7 +273,7 @@ export default function ChargerDetailPage({
                     <Clock className="w-3.5 h-3.5 text-emerald-400" />
                     <span>Duration</span>
                   </span>
-                  <span className="text-emerald-400 font-bold">{durationHours} Hours</span>
+                  <span className="text-emerald-400 font-semibold">{durationHours} Hours</span>
                 </div>
                 <div className="grid grid-cols-4 gap-1.5">
                   {[1, 2, 3, 4].map((hrs) => (
@@ -283,10 +281,10 @@ export default function ChargerDetailPage({
                       key={hrs}
                       type="button"
                       onClick={() => setDurationHours(hrs)}
-                      className={`py-2 text-xs font-bold rounded-xl border transition ${
+                      className={`py-2 text-xs font-semibold rounded-xl border transition ${
                         durationHours === hrs
-                          ? 'bg-emerald-500 text-white border-emerald-400 shadow-md'
-                          : 'bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-700'
+                          ? 'bg-emerald-500 text-slate-950 border-emerald-400 font-bold'
+                          : 'bg-[#070b13] text-slate-400 border-white/[0.06] hover:border-white/[0.15]'
                       }`}
                     >
                       {hrs}h
@@ -297,22 +295,22 @@ export default function ChargerDetailPage({
             </div>
 
             {/* Energy & Bill Preview */}
-            <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2 mb-6 text-xs">
+            <div className="p-4 rounded-xl bg-[#070b13] border border-white/[0.06] space-y-2 mb-6 text-xs">
               <div className="flex justify-between text-slate-400">
                 <span>Estimated Energy:</span>
-                <span className="text-white font-mono font-semibold">~{estimatedKwh} kWh</span>
+                <span className="text-white font-medium">~{estimatedKwh} kWh</span>
               </div>
               <div className="flex justify-between text-slate-400">
                 <span>Charging Rate:</span>
-                <span className="text-white font-mono font-semibold">₹{charger.pricingPerKwh} / kWh</span>
+                <span className="text-white font-medium">₹{charger.pricingPerKwh} / kWh</span>
               </div>
               <div className="flex justify-between text-slate-400">
-                <span>Platform Convenience Fee:</span>
-                <span className="text-emerald-400 font-mono font-semibold">FREE (Beta)</span>
+                <span>Convenience Fee:</span>
+                <span className="text-emerald-400 font-medium">₹0</span>
               </div>
-              <div className="pt-2 border-t border-slate-800 flex justify-between text-sm font-bold">
+              <div className="pt-2 border-t border-white/[0.06] flex justify-between text-sm font-semibold">
                 <span className="text-white">Estimated Total:</span>
-                <span className="text-emerald-400 font-mono text-base">₹{totalAmount}</span>
+                <span className="text-emerald-400 text-base">₹{totalAmount}</span>
               </div>
             </div>
 
@@ -320,22 +318,22 @@ export default function ChargerDetailPage({
             <button
               onClick={handleBookSlot}
               disabled={bookingLoading}
-              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-extrabold text-sm shadow-xl shadow-emerald-500/25 transition flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm transition flex items-center justify-center gap-2 disabled:opacity-50"
             >
               {bookingLoading ? (
                 'Securing Reservation...'
               ) : user ? (
                 <>
                   <span>Reserve Slot & Get Pass</span>
-                  <Zap className="w-4 h-4 fill-white" />
+                  <Zap className="w-4 h-4 fill-slate-950" />
                 </>
               ) : (
                 'Sign In to Reserve'
               )}
             </button>
 
-            <p className="text-[11px] text-slate-500 text-center mt-3 leading-tight">
-              Instant OTP pass generated upon booking. Live confirmation sent via SMTP.
+            <p className="text-[11px] text-slate-400 text-center mt-3 leading-tight">
+              Instant 4-digit gate PIN generated upon confirmation.
             </p>
           </div>
         </div>

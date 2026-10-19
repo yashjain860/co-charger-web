@@ -3,17 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
-  Zap,
-  Gauge,
-  BatteryCharging,
   Play,
   Square,
   RotateCcw,
-  ShieldCheck,
-  Thermometer,
-  Clock,
-  Car,
-  Receipt,
   CheckCircle2,
 } from 'lucide-react';
 
@@ -39,7 +31,6 @@ export default function InteractiveTelemetrySimulator() {
   const [elapsedSec, setElapsedSec] = useState<number>(0);
   const [showReceipt, setShowReceipt] = useState<boolean>(false);
 
-  // Rate per kWh for simulation
   const tariffRate = 16.0;
 
   useEffect(() => {
@@ -70,9 +61,9 @@ export default function InteractiveTelemetrySimulator() {
   }, [isPlaying, selectedCar]);
 
   const currentCost = Math.round(energyKwh * tariffRate * 100) / 100;
-  const currentVoltage = isPlaying ? (230 + Math.sin(elapsedSec) * 2).toFixed(1) : '231.0';
+  const currentVoltage = isPlaying ? (230 + Math.sin(elapsedSec) * 2).toFixed(1) : '230.0';
   const currentAmps = isPlaying ? ((selectedCar.maxKw * 1000) / 230).toFixed(1) : '0.0';
-  const currentPower = isPlaying ? selectedCar.maxKw.toFixed(2) : '0.00';
+  const currentPower = isPlaying ? selectedCar.maxKw.toFixed(1) : '0.0';
 
   const formatTime = (secs: number) => {
     const m = Math.floor(secs / 60);
@@ -81,62 +72,47 @@ export default function InteractiveTelemetrySimulator() {
   };
 
   return (
-    <section className="py-24 bg-slate-900/30 border-b border-white/[0.06] relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-teal-500/10 border border-teal-500/20 text-teal-400 text-xs font-semibold uppercase tracking-wider mb-3">
-            <Gauge className="w-3.5 h-3.5" />
-            <span>Interactive Live HUD Sandbox</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight">
-            Test-Drive The Live Telemetry Engine
+    <section className="py-20 border-b border-slate-800/80 bg-[#090d16]">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+            How Charging Works in Real-Time
           </h2>
-          <p className="mt-4 text-slate-400 text-base sm:text-lg">
-            Experience the real-time vehicle telemetry that drivers and hosts see during a live session. Choose your EV, initiate the smart charge, and inspect real-time electrical telemetry.
+          <p className="mt-1.5 text-slate-400 text-sm max-w-2xl">
+            Simulate a charging session to see the real-time battery readout, electricity delivery, and automatic bill calculation.
           </p>
         </div>
 
-        {/* Vehicle Selection Chips */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
+        {/* Car selector tabs */}
+        <div className="flex flex-wrap gap-2 mb-6">
           {CARS.map((car) => (
             <button
               key={car.name}
               type="button"
               onClick={() => setSelectedCar(car)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                 selectedCar.name === car.name
-                  ? 'bg-emerald-500 text-slate-950 font-bold shadow-lg shadow-emerald-500/20'
-                  : 'bg-white/[0.04] text-slate-300 hover:bg-white/[0.08] border border-white/[0.06]'
+                  ? 'bg-slate-800 text-white font-semibold border border-slate-700'
+                  : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-800'
               }`}
             >
-              <Car className="w-4 h-4" />
-              <span>{car.name}</span>
-              <span className="text-[11px] opacity-75 font-mono">({car.batteryKwh} kWh)</span>
+              {car.name} ({car.batteryKwh} kWh)
             </button>
           ))}
         </div>
 
-        {/* Main Telemetry Box */}
-        <div className="max-w-4xl mx-auto bg-slate-950 border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
-          {/* Subtle glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none" />
-
+        {/* Simulation Console */}
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8">
           {/* Top Bar */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 border-b border-white/[0.08] gap-4">
+          <div className="flex items-center justify-between pb-5 border-b border-slate-800">
             <div>
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-bold text-white">{selectedCar.name}</span>
-                <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[11px] font-mono border border-emerald-500/20">
-                  {selectedCar.maxKw} kW Type-2 AC
-                </span>
-              </div>
+              <div className="text-sm font-semibold text-white">{selectedCar.name}</div>
               <div className="text-xs text-slate-400 mt-0.5">
-                Session Location: E-7 Arera Colony Driveway Node
+                Connected to 7.4 kW Level-2 AC Driveway Wallbox
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               {!isPlaying ? (
                 <button
                   type="button"
@@ -144,10 +120,10 @@ export default function InteractiveTelemetrySimulator() {
                     setIsPlaying(true);
                     setShowReceipt(false);
                   }}
-                  className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition-all shadow-md flex items-center gap-2"
+                  className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5"
                 >
                   <Play className="w-3.5 h-3.5 fill-slate-950" />
-                  <span>Start Live Session</span>
+                  <span>Start Charging</span>
                 </button>
               ) : (
                 <button
@@ -156,10 +132,10 @@ export default function InteractiveTelemetrySimulator() {
                     setIsPlaying(false);
                     setShowReceipt(true);
                   }}
-                  className="px-5 py-2.5 rounded-xl bg-red-500 hover:bg-red-400 text-white font-bold text-xs transition-all shadow-md flex items-center gap-2"
+                  className="px-4 py-2 bg-red-500 hover:bg-red-400 text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5"
                 >
                   <Square className="w-3.5 h-3.5 fill-white" />
-                  <span>Stop & Bill</span>
+                  <span>Stop Session</span>
                 </button>
               )}
 
@@ -172,27 +148,26 @@ export default function InteractiveTelemetrySimulator() {
                   setIsPlaying(false);
                   setShowReceipt(false);
                 }}
-                className="p-2.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-slate-400 hover:text-white transition-colors"
-                title="Reset simulation"
+                className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition-colors"
+                title="Reset"
               >
-                <RotateCcw className="w-4 h-4" />
+                <RotateCcw className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
 
-          {/* Central Telemetry Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 py-8 items-center">
-            {/* Left: Glowing Circular SoC Gauge */}
-            <div className="md:col-span-5 flex flex-col items-center justify-center">
-              <div className="relative w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center">
-                {/* SVG Gauge Circle */}
+          {/* Metrics Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-12 gap-8 py-8 items-center">
+            {/* Battery Circle */}
+            <div className="sm:col-span-5 flex flex-col items-center">
+              <div className="relative w-40 h-40 flex items-center justify-center">
                 <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
                   <circle
                     cx="50"
                     cy="50"
                     r="40"
                     className="stroke-slate-800"
-                    strokeWidth="8"
+                    strokeWidth="7"
                     fill="transparent"
                   />
                   <circle
@@ -200,7 +175,7 @@ export default function InteractiveTelemetrySimulator() {
                     cy="50"
                     r="40"
                     className="stroke-emerald-400 transition-all duration-300"
-                    strokeWidth="8"
+                    strokeWidth="7"
                     strokeDasharray={2 * Math.PI * 40}
                     strokeDashoffset={2 * Math.PI * 40 * (1 - soc / 100)}
                     strokeLinecap="round"
@@ -208,104 +183,60 @@ export default function InteractiveTelemetrySimulator() {
                   />
                 </svg>
 
-                {/* Inner SoC readout */}
-                <div className="absolute flex flex-col items-center justify-center text-center">
-                  <div className="flex items-center gap-1 text-emerald-400 text-xs font-mono font-semibold uppercase">
-                    <BatteryCharging className={`w-4 h-4 ${isPlaying ? 'animate-bounce' : ''}`} />
-                    <span>{isPlaying ? 'CHARGING' : 'STANDBY'}</span>
-                  </div>
-                  <div className="text-4xl sm:text-5xl font-extrabold text-white font-mono tracking-tight my-1">
+                <div className="absolute text-center">
+                  <div className="text-3xl font-bold text-white tracking-tight">
                     {Math.round(soc)}%
                   </div>
-                  <div className="text-[11px] text-slate-400 font-mono">
-                    {energyKwh} / {selectedCar.batteryKwh} kWh
+                  <div className="text-[11px] text-slate-400 mt-0.5">
+                    {isPlaying ? 'Charging active' : 'Plugged in'}
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Right: Real-Time Sensor Metrics */}
-            <div className="md:col-span-7 grid grid-cols-2 gap-3.5">
-              <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex flex-col">
-                <span className="text-[11px] font-mono text-slate-400">ACTIVE POWER</span>
-                <div className="text-2xl font-bold font-mono text-emerald-400 mt-1">
-                  {currentPower} <span className="text-xs text-slate-400 font-normal">kW</span>
-                </div>
-                <span className="text-[10px] text-slate-500 mt-0.5">AC Level-2 Steady</span>
+            {/* Readouts */}
+            <div className="sm:col-span-7 grid grid-cols-2 gap-3 text-xs">
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800">
+                <span className="text-slate-500 block">Active Output</span>
+                <span className="text-xl font-bold text-white mt-1 block">{currentPower} kW</span>
               </div>
-
-              <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex flex-col">
-                <span className="text-[11px] font-mono text-slate-400">LINE VOLTAGE & CURRENT</span>
-                <div className="text-2xl font-bold font-mono text-cyan-400 mt-1">
-                  {currentVoltage} <span className="text-xs text-slate-400 font-normal">V</span>
-                  <span className="text-slate-600 mx-1.5 font-normal">/</span>
-                  {currentAmps} <span className="text-xs text-slate-400 font-normal">A</span>
-                </div>
-                <span className="text-[10px] text-slate-500 mt-0.5">50 Hz Pure Sine</span>
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800">
+                <span className="text-slate-500 block">Voltage / Current</span>
+                <span className="text-xl font-bold text-white mt-1 block">{currentVoltage}V / {currentAmps}A</span>
               </div>
-
-              <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex flex-col">
-                <span className="text-[11px] font-mono text-slate-400">SESSION ENERGY</span>
-                <div className="text-2xl font-bold font-mono text-white mt-1">
-                  {energyKwh.toFixed(2)} <span className="text-xs text-slate-400 font-normal">kWh</span>
-                </div>
-                <span className="text-[10px] text-slate-500 mt-0.5">MID-Class 1 Certified</span>
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800">
+                <span className="text-slate-500 block">Energy Delivered</span>
+                <span className="text-xl font-bold text-white mt-1 block">{energyKwh.toFixed(2)} kWh</span>
               </div>
-
-              <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex flex-col">
-                <span className="text-[11px] font-mono text-slate-400">LIVE BILLED COST</span>
-                <div className="text-2xl font-bold font-mono text-amber-400 mt-1">
-                  ₹{currentCost.toFixed(2)}
-                </div>
-                <span className="text-[10px] text-slate-500 mt-0.5">@ ₹{tariffRate}/kWh flat</span>
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800">
+                <span className="text-slate-500 block">Current Bill</span>
+                <span className="text-xl font-bold text-emerald-400 mt-1 block">₹{currentCost.toFixed(2)}</span>
               </div>
             </div>
           </div>
 
-          {/* Telemetry Status Bar */}
-          <div className="pt-6 border-t border-white/[0.08] flex flex-wrap items-center justify-between text-xs text-slate-400 gap-3">
-            <div className="flex items-center gap-4">
-              <span className="flex items-center gap-1.5 text-emerald-400 font-medium">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                Ground Impedance: 0.12Ω (Safe)
-              </span>
-              <span className="flex items-center gap-1.5 text-slate-300">
-                <Thermometer className="w-3.5 h-3.5 text-cyan-400" />
-                Wallbox Temp: 34°C
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2 font-mono text-slate-300">
-              <Clock className="w-3.5 h-3.5 text-slate-500" />
-              <span>DURATION: {formatTime(elapsedSec)}</span>
-            </div>
+          {/* Time and Status Footer */}
+          <div className="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+            <span>Elapsed: {formatTime(elapsedSec)}</span>
+            <span>Billing Rate: ₹{tariffRate}/kWh flat</span>
           </div>
 
-          {/* Instant Receipt Pop-up upon Stop */}
+          {/* Receipt on finish */}
           {showReceipt && (
-            <div className="mt-6 p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/30 flex flex-col sm:flex-row items-center justify-between gap-4 animate-in fade-in duration-300">
+            <div className="mt-6 p-4 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0">
-                  <CheckCircle2 className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="text-sm font-bold text-white flex items-center gap-2">
-                    <span>Session Completed & Settled</span>
-                    <span className="text-[11px] font-mono text-emerald-300 bg-emerald-500/10 px-2 py-0.5 rounded">
-                      Ref: VS-SIM-9481
-                    </span>
-                  </div>
-                  <div className="text-xs text-slate-300">
-                    Delivered {energyKwh} kWh in {formatTime(elapsedSec)} • Total: ₹{currentCost.toFixed(2)}
-                  </div>
+                <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+                <div className="text-xs">
+                  <span className="text-white font-semibold">Simulated Session Completed: </span>
+                  <span className="text-slate-400">Delivered {energyKwh} kWh in {formatTime(elapsedSec)} for ₹{currentCost.toFixed(2)}.</span>
                 </div>
               </div>
 
               <Link
                 href="/chargers"
-                className="px-5 py-2.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs hover:bg-emerald-400 transition-colors shrink-0 shadow-md"
+                className="px-4 py-2 bg-emerald-500 text-slate-950 font-semibold text-xs rounded-lg hover:bg-emerald-400 transition-colors shrink-0"
               >
-                Book Real Charging Slot
+                Find Real Chargers
               </Link>
             </div>
           )}

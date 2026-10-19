@@ -65,11 +65,11 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Infrastructure & Security */}
+          {/* Infrastructure & Standards */}
           <div>
-            <h4 className="font-semibold text-white mb-3 text-sm">Sovereign Infrastructure</h4>
+            <h4 className="font-semibold text-white mb-3 text-sm">Standards & Support</h4>
             <p className="text-slate-500 leading-relaxed mb-3">
-              Engineered with Next.js 15, React 19, MongoDB Atlas with 2dsphere proximity search, and live transactional SMTP delivery.
+              Certified per Ministry of Power EV charging guidelines. Type-2 and CCS2 compliant residential wallbox installations with 24/7 driver roadside support.
             </p>
             <div className="flex items-center gap-1.5 text-slate-400">
               <Mail className="w-3.5 h-3.5 text-emerald-400" />
@@ -80,12 +80,12 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-slate-900/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-600">
-          <p>© {new Date().getFullYear()} VoltShare by TheWebVale. Sovereign EV Mesh Architecture. All rights reserved.</p>
+        <div className="pt-8 border-t border-slate-900/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500">
+          <p>© {new Date().getFullYear()} VoltShare by TheWebVale. Community EV Charging Network. All rights reserved.</p>
           <div className="flex items-center gap-4">
-            <span className="inline-flex items-center gap-1 text-emerald-500 font-mono text-[11px]">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-              Mesh Core Online
+            <span className="inline-flex items-center gap-1.5 text-emerald-400 text-xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              Network Operational
             </span>
           </div>
         </div>

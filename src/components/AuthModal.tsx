@@ -102,37 +102,37 @@ export default function AuthModal() {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-md overflow-hidden glass-panel-glow rounded-2xl bg-[#090d16] border border-emerald-500/30 p-8 shadow-2xl">
+      <div className="relative w-full max-w-md overflow-hidden rounded-2xl bg-[#0c121e] border border-white/[0.08] p-8 shadow-2xl">
         {/* Close Button */}
         <button
           onClick={closeAuthModal}
-          className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800/60 transition"
+          className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white rounded-lg hover:bg-white/[0.05] transition"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Brand Header */}
-        <div className="flex items-center gap-2 mb-6">
-          <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-            <Zap className="w-6 h-6 fill-emerald-400" />
+        <div className="flex items-center gap-2.5 mb-6">
+          <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center text-slate-950 font-bold">
+            <Zap className="w-4 h-4 fill-slate-950" />
           </div>
           <div>
-            <h3 className="text-xl font-bold tracking-tight text-white">VoltShare</h3>
-            <p className="text-xs text-slate-400">Community EV Charging Mesh</p>
+            <h3 className="text-lg font-bold tracking-tight text-white">VoltShare</h3>
+            <p className="text-xs text-slate-400">Community EV Charging Network</p>
           </div>
         </div>
 
         {/* Tab switcher for Sign In / Sign Up */}
         {mode !== 'verify' && (
-          <div className="flex p-1 mb-6 rounded-xl bg-slate-900 border border-slate-800">
+          <div className="flex p-1 mb-6 rounded-xl bg-[#070b13] border border-white/[0.06]">
             <button
               onClick={() => {
                 setMode('signin');
                 setError('');
               }}
-              className={`flex-1 py-2 text-sm font-semibold rounded-lg transition ${
+              className={`flex-1 py-1.5 text-xs font-medium rounded-lg transition ${
                 mode === 'signin'
-                  ? 'bg-emerald-500 text-white shadow-md'
+                  ? 'bg-white/[0.08] text-white font-semibold'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -143,13 +143,13 @@ export default function AuthModal() {
                 setMode('signup');
                 setError('');
               }}
-              className={`flex-1 py-2 text-sm font-semibold rounded-lg transition ${
+              className={`flex-1 py-1.5 text-xs font-medium rounded-lg transition ${
                 mode === 'signup'
-                  ? 'bg-emerald-500 text-white shadow-md'
+                  ? 'bg-white/[0.08] text-white font-semibold'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              Register
+              Create Account
             </button>
           </div>
         )}
@@ -201,13 +201,13 @@ export default function AuthModal() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-semibold text-sm shadow-lg shadow-emerald-500/20 transition flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full mt-2 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition flex items-center justify-center gap-1.5 disabled:opacity-50"
             >
-              {loading ? 'Authenticating...' : 'Sign In to VoltShare'}
+              {loading ? 'Signing in...' : 'Sign In to VoltShare'}
               <ArrowRight className="w-4 h-4" />
             </button>
             <div className="pt-2 text-center text-xs text-slate-500">
-              Demo Credentials: <span className="text-slate-300 font-mono">driver@thewebvale.com</span> / <span className="text-slate-300 font-mono">DriverPass2026!</span>
+              Demo Credentials: <span className="text-slate-300">driver@thewebvale.com</span> / <span className="text-slate-300">DriverPass2026!</span>
             </div>
           </form>
         )}
@@ -300,7 +300,7 @@ export default function AuthModal() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-semibold text-sm shadow-lg shadow-emerald-500/20 transition flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full mt-2 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition flex items-center justify-center gap-1.5 disabled:opacity-50"
             >
               {loading ? 'Creating Account...' : 'Continue to Verification'}
               <ArrowRight className="w-4 h-4" />
@@ -312,12 +312,12 @@ export default function AuthModal() {
         {mode === 'verify' && (
           <form onSubmit={handleVerifyOtp} className="space-y-4">
             <div className="text-center">
-              <div className="w-12 h-12 mx-auto mb-3 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-                <Mail className="w-6 h-6" />
+              <div className="w-10 h-10 mx-auto mb-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+                <Mail className="w-5 h-5" />
               </div>
-              <h4 className="text-base font-bold text-white">Enter Email OTP</h4>
+              <h4 className="text-sm font-bold text-white">Enter Email Verification Code</h4>
               <p className="text-xs text-slate-400 mt-1">
-                We sent a 6-digit code to <span className="text-emerald-400">{email}</span>
+                We sent a 6-digit code to <span className="text-white font-medium">{email}</span>
               </p>
             </div>
             <div>
@@ -328,15 +328,15 @@ export default function AuthModal() {
                 value={otp}
                 onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
                 placeholder="123456"
-                className="w-full py-3 text-center tracking-[8px] text-2xl font-mono font-bold rounded-xl bg-slate-950 border border-emerald-500/40 text-emerald-400 placeholder-slate-700 focus:outline-none focus:border-emerald-400"
+                className="w-full py-2.5 text-center tracking-[6px] text-xl font-mono font-bold rounded-xl bg-[#070b13] border border-white/[0.08] text-white placeholder-slate-700 focus:outline-none focus:border-emerald-500"
               />
             </div>
             <button
               type="submit"
               disabled={loading || otp.length < 6}
-              className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-semibold text-sm shadow-lg shadow-emerald-500/20 transition disabled:opacity-50"
+              className="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition disabled:opacity-50"
             >
-              {loading ? 'Verifying...' : 'Verify & Enter VoltShare'}
+              {loading ? 'Verifying...' : 'Verify & Continue'}
             </button>
             <button
               type="button"
