@@ -3,6 +3,7 @@
 import React, { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
 import {
   Zap,
@@ -15,6 +16,10 @@ import {
   Receipt,
   ArrowRight,
   TrendingUp,
+  RotateCcw,
+  Thermometer,
+  Lock,
+  Car,
 } from 'lucide-react';
 
 export default function SessionTelemetryPage({
@@ -31,13 +36,14 @@ export default function SessionTelemetryPage({
     currentSoC: 32,
     targetSoC: 85,
     deliveredKwh: 1.4,
-    totalCost: 22,
+    totalCost: 22.4,
     powerKw: 7.4,
-    voltage: 238,
+    voltage: 231.4,
+    currentAmps: 32.0,
     isCompleted: false,
   });
 
-  const [loading, setLoading] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(false);
   const [stopping, setStopping] = useState(false);
   const [completedSummary, setCompletedSummary] = useState<any>(null);
 
@@ -51,7 +57,12 @@ export default function SessionTelemetryPage({
         if (res.ok) {
           const data = await res.json();
           if (data.success && data.telemetry) {
-            setTelemetry(data.telemetry);
+            setTelemetry((prev) => ({
+              ...prev,
+              ...data.telemetry,
+              currentAmps: 31.8,
+              voltage: 231.4,
+            }));
             if (data.telemetry.isCompleted) {
               triggerConfetti();
             }
@@ -84,120 +95,254 @@ export default function SessionTelemetryPage({
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      {/* Session Title */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-white/[0.08] mb-8 gap-4">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 mb-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span>SESSION IN PROGRESS • LEVEL-2 AC MESH</span>
+          </div>
+          <h1 className="text-3xl font-extrabold text-white tracking-tight">
+            Live Charging Telemetry HUD
+          </h1>
+          <p className="text-xs text-slate-400 mt-1 font-mono">
+            Session Ref: {id} • Gated Driveway Node #1
+          </p>
+        </div>
+
+        {!completedSummary && (
+          <button
+            type="button"
+            onClick={handleStopCharging}
+            disabled={stopping}
+            className="px-5 py-2.5 rounded-xl bg-red-500 hover:bg-red-400 text-white font-bold text-xs shadow-lg shadow-red-500/20 transition flex items-center gap-2"
+          >
+            <Square className="w-3.5 h-3.5 fill-white" />
+            <span>{stopping ? 'Disconnecting...' : 'Stop & Unplug Bay'}</span>
+          </button>
+        )}
+      </div>
+
       {completedSummary ? (
         /* COMPLETED INVOICE RECEIPT */
-        <div className="p-8 rounded-3xl glass-panel-glow border border-emerald-500/40 bg-[#090d16] text-center max-w-lg mx-auto">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+          className="p-8 rounded-3xl bg-slate-900 border border-emerald-500/40 text-center max-w-lg mx-auto shadow-2xl"
+        >
           <div className="w-16 h-16 rounded-3xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mx-auto mb-4 animate-bounce">
             <CheckCircle2 className="w-8 h-8" />
           </div>
           <h2 className="text-2xl font-black text-white mb-1">Charging Completed!</h2>
           <p className="text-xs text-slate-400 mb-6">
-            The Type-2 solenoid lock has been released. Digital tax receipt generated.
+            The Type-2 solenoid lock has been released. Automated tax receipt generated and emailed.
           </p>
 
-          <div className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3 text-left text-xs mb-6">
+          <div className="p-5 rounded-2xl bg-black/60 border border-white/10 space-y-3 text-left text-xs mb-6">
             <div className="flex justify-between text-slate-400">
               <span>Energy Delivered:</span>
-              <span className="font-mono font-bold text-white text-sm">{completedSummary.deliveredKwh} kWh</span>
+              <span className="font-mono font-bold text-white">{completedSummary.deliveredKwh} kWh</span>
             </div>
             <div className="flex justify-between text-slate-400">
-              <span>Starting Battery SoC:</span>
-              <span className="font-mono text-slate-300">{completedSummary.startSoC}%</span>
+              <span>Duration Parked:</span>
+              <span className="font-mono text-white">{completedSummary.durationMinutes} minutes</span>
             </div>
             <div className="flex justify-between text-slate-400">
-              <span>Final Battery SoC:</span>
-              <span className="font-mono font-bold text-emerald-400">{completedSummary.finalSoC}%</span>
+              <span>Energy Tariff:</span>
+              <span className="font-mono text-white">₹{completedSummary.ratePerKwh}/kWh flat</span>
             </div>
-            <div className="flex justify-between text-slate-400">
-              <span>Duration:</span>
-              <span className="font-mono text-white">{completedSummary.durationMinutes} Minutes</span>
-            </div>
-            <div className="pt-3 border-t border-slate-800 flex justify-between items-baseline">
-              <span className="font-bold text-slate-200">Total Billed:</span>
-              <span className="text-2xl font-black text-emerald-400 font-mono">₹{completedSummary.totalCost}</span>
+            <div className="pt-2 border-t border-white/10 flex justify-between text-sm font-bold text-emerald-400">
+              <span>Total Settled:</span>
+              <span className="font-mono">₹{completedSummary.totalAmount}</span>
             </div>
           </div>
 
           <Link
             href="/bookings"
-            className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-xs shadow-lg shadow-emerald-500/20 transition flex items-center justify-center gap-2"
+            className="w-full py-3.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs hover:bg-emerald-400 transition block shadow-lg shadow-emerald-500/20"
           >
-            <span>Return to Driver Dashboard</span>
-            <ArrowRight className="w-4 h-4" />
+            View All My Bookings
           </Link>
-        </div>
+        </motion.div>
       ) : (
-        /* LIVE TELEMETRY TERMINAL */
-        <div className="space-y-6">
-          {/* Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 mb-2 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-bold font-mono">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                ACTIVE OCPP TELEMETRY HUD
-              </div>
-              <h1 className="text-3xl font-extrabold text-white tracking-tight">
-                Live Driveway Charging Session
-              </h1>
-              <p className="text-sm text-slate-400 mt-1">
-                Real-time sinusoidal power flow from host wallbox into EV battery pack.
-              </p>
+        /* LIVE DUAL-PANEL HUD */
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* LEFT: 3D PASS CARD */}
+          <div className="lg:col-span-5 flex flex-col items-center">
+            <div className="w-full flex items-center justify-between mb-3 text-xs">
+              <span className="font-bold text-slate-300 uppercase tracking-wider">
+                Digital Pass & Keycard
+              </span>
+              <span className="text-slate-400 font-mono text-[11px]">
+                Tap to flip diagnostics
+              </span>
             </div>
 
-            <button
-              onClick={handleStopCharging}
-              disabled={stopping}
-              className="self-start sm:self-auto px-5 py-2.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 font-bold text-xs transition flex items-center gap-2 shadow-lg disabled:opacity-50"
+            <div
+              onClick={() => setIsFlipped(!isFlipped)}
+              className="w-full h-64 sm:h-72 perspective-1000 cursor-pointer select-none group"
             >
-              <Square className="w-4 h-4 fill-rose-300" />
-              <span>{stopping ? 'Stopping Flow...' : 'Stop Charging'}</span>
-            </button>
+              <div
+                className={`relative w-full h-full rounded-3xl transition-transform duration-700 transform-style-3d shadow-2xl ${
+                  isFlipped ? 'rotate-y-180' : ''
+                }`}
+              >
+                {/* FRONT FACE (Driver Pass) */}
+                <div className="absolute inset-0 w-full h-full rounded-3xl bg-gradient-to-br from-slate-900 via-[#0b1320] to-black border border-emerald-500/30 p-6 flex flex-col justify-between backface-hidden shadow-2xl group-hover:border-emerald-500/50 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
+                        <Car className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-white">Tata Nexon EV Max</div>
+                        <div className="text-[10px] text-slate-400 font-mono">MP-04-EV-9821</div>
+                      </div>
+                    </div>
+                    <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 text-[10px] font-mono font-semibold border border-emerald-500/20">
+                      LIVE BAY #1
+                    </span>
+                  </div>
+
+                  <div className="my-auto">
+                    <div className="text-[10px] text-slate-400 uppercase tracking-widest font-mono">
+                      Gate Entry Intercom PIN
+                    </div>
+                    <div className="text-3xl font-extrabold text-emerald-400 font-mono tracking-widest mt-1">
+                      5 8 2 1
+                    </div>
+                    <div className="text-[11px] text-slate-400 mt-1">
+                      Auto-authorized at gate intercom
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs text-slate-400 border-t border-white/[0.08] pt-2.5">
+                    <span>E-7 Arera Colony Node</span>
+                    <span className="text-emerald-400 text-[11px] flex items-center gap-1">
+                      <span>Tap to flip</span>
+                      <RotateCcw className="w-3 h-3" />
+                    </span>
+                  </div>
+                </div>
+
+                {/* BACK FACE (Safety Sensors) */}
+                <div className="absolute inset-0 w-full h-full rounded-3xl bg-gradient-to-br from-slate-950 via-[#0e1626] to-slate-900 border border-cyan-500/30 p-6 flex flex-col justify-between backface-hidden rotate-y-180 shadow-2xl">
+                  <div className="flex items-center justify-between border-b border-white/[0.08] pb-2.5">
+                    <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider flex items-center gap-1.5">
+                      <ShieldCheck className="w-4 h-4" />
+                      Safety Interlocks
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400">Type-B RCD</span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2.5 my-auto text-xs">
+                    <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+                      <span className="text-[10px] text-slate-400 font-mono">EARTH IMPEDANCE</span>
+                      <div className="text-sm font-bold font-mono text-emerald-400 mt-0.5">0.11 Ω</div>
+                    </div>
+                    <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+                      <span className="text-[10px] text-slate-400 font-mono">TEMPERATURE</span>
+                      <div className="text-sm font-bold font-mono text-white mt-0.5">34°C (Normal)</div>
+                    </div>
+                    <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+                      <span className="text-[10px] text-slate-400 font-mono">RESIDUAL DC</span>
+                      <div className="text-sm font-bold font-mono text-cyan-400 mt-0.5">&lt; 3mA</div>
+                    </div>
+                    <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+                      <span className="text-[10px] text-slate-400 font-mono">SOLENOID LOCK</span>
+                      <div className="text-sm font-bold font-mono text-emerald-400 mt-0.5">ENGAGED</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between text-[11px] text-slate-400 border-t border-white/[0.08] pt-2">
+                    <span>15ms Auto-Cutoff Armed</span>
+                    <span className="text-cyan-400 flex items-center gap-1">
+                      <span>Tap to flip front</span>
+                      <RotateCcw className="w-3 h-3" />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Central Battery Gauge Card */}
-          <div className="p-8 rounded-3xl glass-panel-glow border border-emerald-500/40 bg-[#090d16] text-center">
-            <div className="flex justify-between items-center text-xs text-slate-400 mb-4 pb-3 border-b border-slate-800">
-              <span className="flex items-center gap-1.5 font-semibold text-slate-300">
-                <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                Hardware Lock: Engaged
+          {/* RIGHT: LIVE TELEMETRY GAUGES */}
+          <div className="lg:col-span-7 bg-slate-900/60 border border-white/10 rounded-3xl p-6 sm:p-8 backdrop-blur-xl">
+            <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
+              {/* Circular SoC Gauge */}
+              <div className="sm:col-span-5 flex flex-col items-center justify-center">
+                <div className="relative w-44 h-44 flex items-center justify-center">
+                  <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="40"
+                      className="stroke-slate-800"
+                      strokeWidth="8"
+                      fill="transparent"
+                    />
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="40"
+                      className="stroke-emerald-400 transition-all duration-300"
+                      strokeWidth="8"
+                      strokeDasharray={2 * Math.PI * 40}
+                      strokeDashoffset={2 * Math.PI * 40 * (1 - telemetry.currentSoC / 100)}
+                      strokeLinecap="round"
+                      fill="transparent"
+                    />
+                  </svg>
+                  <div className="absolute flex flex-col items-center justify-center text-center">
+                    <div className="text-3xl font-extrabold text-white font-mono">
+                      {Math.round(telemetry.currentSoC)}%
+                    </div>
+                    <div className="text-[10px] text-emerald-400 font-mono uppercase mt-0.5">
+                      TARGET: {telemetry.targetSoC}%
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sensor Readouts */}
+              <div className="sm:col-span-7 grid grid-cols-2 gap-3">
+                <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+                  <span className="text-[10px] text-slate-400 font-mono">CHARGING SPEED</span>
+                  <div className="text-xl font-bold font-mono text-emerald-400 mt-0.5">
+                    {telemetry.powerKw} kW
+                  </div>
+                </div>
+                <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+                  <span className="text-[10px] text-slate-400 font-mono">LINE VOLTS / AMPS</span>
+                  <div className="text-xl font-bold font-mono text-cyan-400 mt-0.5">
+                    {telemetry.voltage}V / 32A
+                  </div>
+                </div>
+                <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+                  <span className="text-[10px] text-slate-400 font-mono">ENERGY CONSUMED</span>
+                  <div className="text-xl font-bold font-mono text-white mt-0.5">
+                    {telemetry.deliveredKwh} kWh
+                  </div>
+                </div>
+                <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+                  <span className="text-[10px] text-slate-400 font-mono">BILLED AMOUNT</span>
+                  <div className="text-xl font-bold font-mono text-amber-400 mt-0.5">
+                    ₹{telemetry.totalCost}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-white/[0.08] flex items-center justify-between text-xs text-slate-400">
+              <span className="flex items-center gap-1.5 text-emerald-400">
+                <ShieldCheck className="w-4 h-4" />
+                Active Escrow Protected
               </span>
-              <span className="font-mono text-emerald-400">
-                {telemetry.voltage} V • 50.0 Hz
+              <span className="font-mono text-slate-300">
+                Billing Rate: ₹16.00/kWh flat
               </span>
-            </div>
-
-            <div className="my-8">
-              <div className="text-6xl sm:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-500 font-mono mb-2">
-                {telemetry.currentSoC}%
-              </div>
-              <p className="text-xs text-slate-400 uppercase font-mono tracking-wider">
-                State of Charge (Target: {telemetry.targetSoC}%)
-              </p>
-            </div>
-
-            {/* Visual Battery Bar */}
-            <div className="w-full max-w-lg mx-auto h-4 rounded-full bg-slate-950 border border-slate-800 p-0.5 overflow-hidden mb-8">
-              <div
-                style={{ width: `${telemetry.currentSoC}%` }}
-                className="h-full rounded-full bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-300 transition-all duration-500 shadow-[0_0_15px_rgba(16,185,129,0.5)]"
-              />
-            </div>
-
-            {/* 3 Metric Capsules */}
-            <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto pt-4 border-t border-slate-800 text-center">
-              <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
-                <span className="text-[11px] text-slate-500 block">Rate</span>
-                <span className="text-lg font-black text-white font-mono">{telemetry.powerKw} kW</span>
-              </div>
-              <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
-                <span className="text-[11px] text-slate-500 block">Delivered</span>
-                <span className="text-lg font-black text-white font-mono">{telemetry.deliveredKwh} kWh</span>
-              </div>
-              <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
-                <span className="text-[11px] text-slate-500 block">Total Cost</span>
-                <span className="text-lg font-black text-emerald-400 font-mono">₹{telemetry.totalCost}</span>
-              </div>
             </div>
           </div>
         </div>
